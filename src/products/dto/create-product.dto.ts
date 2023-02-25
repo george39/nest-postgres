@@ -32,4 +32,10 @@ export class CreateProductDto {
 
     @IsIn(['men', 'women', 'kid', 'unisex']) // Obliga a que en el arreglo venga con esos valores 
     gender: string;
-}
+
+    @IsString({each: true})
+    @IsArray()
+    @IsOptional()
+    tags: string[];
+
+}    

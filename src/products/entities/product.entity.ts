@@ -40,6 +40,12 @@ export class Product {
     @Column('text')
     gender: string
 
+    @Column('text', {
+        array: true,
+        default: []
+    })
+    tags: string[];
+
     @BeforeInsert()
     checkSlugInsert() {
         if (!this.slug) {
@@ -52,5 +58,11 @@ export class Product {
             .replaceAll("'",'')
     }
 
-    //@BeforeUpdate()
+    @BeforeUpdate()
+    checkSlugUpdate() {
+        this.slug = this.slug
+            .toLocaleLowerCase()
+            .replaceAll(' ', '_')
+            .replaceAll("'",'')
+    }
 }
