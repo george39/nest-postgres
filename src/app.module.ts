@@ -37,7 +37,8 @@ import { AuthModule } from './auth/auth.module';
 
     FilesModule,
 
-    AuthModule
+    AuthModule,
+
   ],
 
 })

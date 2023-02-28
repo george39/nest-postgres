@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { InternalServerErrorException } from '@nestjs/common/exceptions';
+
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -13,12 +16,28 @@ export class AuthService {
     private readonly userRepository: Repository<User>
   ){}
   
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
     try {
+      const {password, ...userData} = createUserDto;
+      const user = this.userRepository.create({
+        ...userData,
+        password: bcrypt.hashSync(password, 10)
+      });
+      await this.userRepository.save(user)
+      delete user.password;
+      return user;
 
     } catch (error) {
-      console.log(error)
+      this.handleDBErrors(error);
     }
+  }
+
+  private handleDBErrors(error: any): never {
+    if (error.code === '23505')
+    throw new BadRequestException(error.detail);
+  console.log(error)
+  
+  throw new InternalServerErrorException('Please check verver logs')
   }
 
   
