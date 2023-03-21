@@ -1,15 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { PruebaService } from './prueba.service';
-import { CreatePruebaDto } from './dto/create-prueba.dto';
+import { CreatePruebaDto, DataDto } from './dto/create-prueba.dto';
 import { UpdatePruebaDto } from './dto/update-prueba.dto';
+import { BetenlaceCpaDto } from './dto/betenlace-cpa.dto';
+import { BetenlaceService } from './betenlace.service';
 
 @Controller('prueba')
 export class PruebaController {
-  constructor(private readonly pruebaService: PruebaService) {}
+  constructor(
+    private readonly pruebaService: PruebaService,
+    private readonly betenlaceService: BetenlaceService,
+  ) {}
+
+  @Put()
+  put(@Body() dataDto: DataDto) {
+    return this.pruebaService.put(dataDto);
+  }
 
   @Post()
-  create(@Body() createPruebaDto: CreatePruebaDto) {
-    return this.pruebaService.create(createPruebaDto);
+  create(cpaCount, registeredCount) {
+    return this.betenlaceService.create(cpaCount, registeredCount);
   }
 
   @Get()

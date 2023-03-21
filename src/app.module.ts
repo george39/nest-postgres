@@ -9,6 +9,7 @@ import { FilesModule } from './files/files.module';
 // import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from './auth/auth.module';
 import { PruebaModule } from './prueba/prueba.module';
+import { PartnerModule } from './partner/partner.module';
 
 
 @Module({
@@ -41,6 +42,8 @@ import { PruebaModule } from './prueba/prueba.module';
     AuthModule,
 
     PruebaModule,
+
+    PartnerModule,
 
   ],
 

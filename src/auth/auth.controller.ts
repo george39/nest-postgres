@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto } from './dto';
@@ -28,7 +29,11 @@ export class AuthController {
 
   @Get('private')
   @UseGuards(AuthGuard())
-  testingPrivateRoute() {
-    return 'Hola mundo';
+  testingPrivateRoute(@Req() request: Express.Request) {
+    console.log(request);
+    return {
+      ok: true,
+      message: "hola mundo",
+    }
   }
 }
