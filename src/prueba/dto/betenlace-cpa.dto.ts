@@ -4,6 +4,6 @@ export class BetenlaceCpaDto {
   @IsNumber()
   cpaCount: number;
 
-  @IsNumber()
-  registeredCount: number;
+  // @IsNumber()
+  // registeredCount: number;
 }

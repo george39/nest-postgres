@@ -8,8 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class BetenlaceService {
   constructor(
     @InjectRepository(Betenlace)
-    private readonly betenlaceRepository: Repository<Betenlace>
-) {}
+    private readonly betenlaceRepository: Repository<Betenlace>,
+  ) {}
   async create(cpaCount, registeredCount) {
     const cpa = new Betenlace();
     cpa.cpCount = cpaCount;

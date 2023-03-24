@@ -20,7 +20,8 @@ export class PruebaService {
     const data = dataDto.data.map(async (datos) => {
       const bet = await this.betenlaceService.create(
         datos.cpaBetenlace,
-        datos.registeredCount,
+        (datos['registeredCount'] = 4),
+        // datos.registeredCount,
       );
       // await this.betenlaceRepository.save(bet);
       // return datos;
