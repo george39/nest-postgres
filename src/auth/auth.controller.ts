@@ -34,6 +34,12 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
+  @Get('check-status')
+  @Auth()
+  checkAuthStatus(@GetUser() user: User) {
+    return this.authService.checkAuthStatus(user);
+  }
+
   @Get('private')
   @UseGuards(AuthGuard())
   testingPrivateRoute(
@@ -42,7 +48,6 @@ export class AuthController {
     @GetUser('email') userEmail: string,
     @RawHeaders() rawHeaders: string[],
   ) {
-
     return {
       ok: true,
       message: 'hola mundo',
@@ -62,7 +67,7 @@ export class AuthController {
     };
   }
 
-  @Get('private3') 
+  @Get('private3')
   @Auth(ValidRoles.superUser)
   privateRoute3(@GetUser() user: User) {
     return {
